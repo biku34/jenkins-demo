@@ -3,15 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Clone Check') {
+        stage('Show Updated Lines') {
             steps {
-                echo 'Code successfully cloned from GitHub!'
-            }
-        }
+                bat '''
+                echo ===== Changed Files =====
+                git diff %GIT_PREVIOUS_COMMIT% %GIT_COMMIT% --name-only
 
-        stage('List Files') {
-            steps {
-                bat 'dir'
+                echo ===== Updated Lines =====
+                git diff %GIT_PREVIOUS_COMMIT% %GIT_COMMIT%
+                '''
             }
         }
 
